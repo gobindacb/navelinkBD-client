@@ -139,6 +139,14 @@ async function run() {
             }
         });
 
+        // get a guide from users by id
+        app.get('/guides/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await userCollection.findOne(query);
+            res.send(result);
+        })
+
         // delete user from db
         app.delete('/users/:id', verifyToken, verifyAdmin, async (req, res) => {
             const id = req.params.id;
@@ -253,6 +261,14 @@ async function run() {
         app.get('/stories', async (req, res) => {
 
             const result = await storyCollection.find().toArray();
+            res.send(result);
+        })
+
+        // get a story from db by id
+        app.get('/story/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await storyCollection.findOne(query);
             res.send(result);
         })
 
